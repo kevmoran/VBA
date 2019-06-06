@@ -1,0 +1,32 @@
+Public WithEvents OlItems As Outlook.Items
+
+
+Public Sub Initialize_handler()
+    Set OlItems = Application.GetNamespace("MAPI").GetDefaultFolder(olFolderTasks).Items
+End Sub
+
+Private Sub OlItems_ItemAdd(ByVal Item As Object)
+
+If (InStr(Item.Categories, "General")) Or (InStr(Item.Categories, "Partners")) Or (InStr(Item.Categories, "PRe partners")) Or (InStr(Item.Categories, "Purchases")) Then
+    Item.Sensitivity = olPrivate
+    Item.Save
+
+  Else:
+    Item.Sensitivity = olNormal
+    Item.Save
+    End If
+    
+    Initialize_handler
+
+End Sub
+
+Private Sub OlItems_ItemChange(ByVal Item As Object)
+      
+If (InStr(Item.Categories, "General")) Or (InStr(Item.Categories, "Partners")) Or (InStr(Item.Categories, "PRe partners")) Or (InStr(Item.Categories, "Purchases")) Then
+    Item.Sensitivity = olPrivate
+    Item.Save
+
+  Else:
+    Item.Sensitivity = olNormal
+    Item.Save
+    End If
